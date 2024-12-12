@@ -1,7 +1,4 @@
-import { createProductRepo } from "../repositories/ProductRepo.js";
-import { createOrderRepo } from "../repositories/OrderRepo.js";
-import { createProduct } from "../models/Product.js";
-import { createOrder, OrderStatus } from "../models/Order.js";
+import { createOrder } from "../models/Order.js";
 
 export function createShopService(productRepo, orderRepo) {
   return {

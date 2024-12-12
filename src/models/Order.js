@@ -1,3 +1,5 @@
+import { generateId } from "../utils/IdService";
+
 export const OrderStatus = {
   PROCESSING: "PROCESSING",
   IN_DELIVERY: "IN_DELIVERY",
@@ -5,10 +7,10 @@ export const OrderStatus = {
 };
 
 export function createOrder(
-  orderId,
+  orderId = generateId(),
   items,
   status = OrderStatus.PROCESSING,
-  timestamp = new Date() . // which timezone? which timestamp is relevant?
+  timestamp = new Date()
 ) {
   return { orderId, items, status, timestamp };
 }
