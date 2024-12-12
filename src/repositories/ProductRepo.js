@@ -1,23 +1,25 @@
 function createProductRepo() {
-  const products = []; // private array because of closure!! not accessible from outside
+  const products = new Map(); // this map is private because it is encapsulated in the clorse
 
   return {
     addProduct(product) {
-      products.push(product);
+      if (products.has(product.productId)) {
+        throw new Error(`Product with ID ${product.productId} already exists.`);
+      }
+      products.set(product.productId, product);
     },
     removeProduct(productId) {
-      const index = products.findIndex(
-        (product) => product.productId === productId
-      );
-      if (index > -1) products.splice(index, 1);
+      if (!products.delete(productId)) {
+        throw new Error(`Product with ID ${productId} does not exist.`);
+      }
     },
     getProductById(productId) {
-      return (
-        products.find((product) => product.productId === productId) || null
-      );
+      return products.get(productId) || null;
     },
     getAllProducts() {
-      return [...products];
+      return Array.from(products.values());
     },
   };
 }
+
+module.exports = { createProductRepo };
