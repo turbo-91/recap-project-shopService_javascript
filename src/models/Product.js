@@ -1,5 +1,3 @@
-function createProduct(productId, name, price) {
+export function createProduct(productId, name, price) {
   return { productId, name, price };
 }
-
-module.exports = { createProduct };

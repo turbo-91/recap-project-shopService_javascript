@@ -1,8 +1,10 @@
-const { createProductRepo } = require("./repos/productRepo");
-const { createOrderRepo } = require("./repos/orderRepo");
-const { createShopService } = require("./services/ShopService");
-const { createProduct } = require("./models/Product");
-const { createOrder, OrderStatus } = require("./models/Order");
+import { createProductRepo } from "./repositories/ProductRepo.js";
+import { createOrderRepo } from "./repositories/OrderRepo.js";
+import { createShopService } from "./services/ShopService.js";
+import { createProduct } from "./models/Product.js";
+import { createOrder, OrderStatus } from "./models/Order.js";
+
+console.log(typeof createOrder);
 
 // Initialize Repositories
 const productRepo = createProductRepo();

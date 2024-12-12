@@ -1,4 +1,4 @@
-function createProductRepo() {
+export function createProductRepo() {
   const products = new Map(); // this map is private because it is encapsulated in the clorse
 
   return {
@@ -21,5 +21,3 @@ function createProductRepo() {
     },
   };
 }
-
-module.exports = { createProductRepo };
