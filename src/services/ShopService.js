@@ -1,4 +1,6 @@
-function createShopService(productRepo, orderRepo) {
+import { createOrder } from "../models/Order.js";
+
+export function createShopService(productRepo, orderRepo) {
   return {
     placeOrder(orderId, productQuantities) {
       const items = productQuantities.map(({ productId, quantity }) => {
