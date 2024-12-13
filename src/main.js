@@ -3,8 +3,7 @@ import { createOrderRepo } from "./repositories/OrderRepo.js";
 import { createShopService } from "./services/ShopService.js";
 import { createProduct } from "./models/Product.js";
 import { createOrder, OrderStatus } from "./models/Order.js";
-
-console.log(typeof createOrder);
+import { generateId } from "./utils/IdService.js";
 
 // Initialize Repositories
 const productRepo = createProductRepo();
@@ -14,10 +13,10 @@ const orderRepo = createOrderRepo();
 const shopService = createShopService(productRepo, orderRepo);
 
 // Add Cheese Products to Product Repository
-const brie = createProduct("c1", "Brie", 8.5);
-const gouda = createProduct("c2", "Gouda", 6.0);
-const cheddar = createProduct("c3", "Cheddar", 7.0);
-const blueCheese = createProduct("c4", "Blue Cheese", 9.5);
+const brie = createProduct(undefined, "Brie", 8.5);
+const gouda = createProduct(undefined, "Gouda", 6.0);
+const cheddar = createProduct(undefined, "Cheddar", 7.0);
+const blueCheese = createProduct(undefined, "Blue Cheese", 9.5);
 
 productRepo.addProduct(brie);
 productRepo.addProduct(gouda);
@@ -30,20 +29,20 @@ console.log(productRepo.getAllProducts());
 
 // Place Orders
 try {
-  shopService.placeOrder("o1", [
-    { productId: "c1", quantity: 2 }, // 2 Bries
-    { productId: "c3", quantity: 1 }, // 1 Cheddar
+  shopService.placeOrder(undefined, [
+    { productId: brie.productId, quantity: 2 }, // 2 Bries
+    { productId: cheddar.productId, quantity: 1 }, // 1 Cheddar
   ]);
 
-  shopService.placeOrder("o2", [
-    { productId: "c2", quantity: 3 }, // 3 Goudas
-    { productId: "c4", quantity: 1 }, // 1 Blue Cheese
+  shopService.placeOrder(undefined, [
+    { productId: gouda.productId, quantity: 3 }, // 3 Goudas
+    { productId: blueCheese.productId, quantity: 1 }, // 1 Blue Cheese
   ]);
 
-  shopService.placeOrder("o3", [
-    { productId: "c1", quantity: 1 }, // 1 Brie
-    { productId: "c2", quantity: 2 }, // 2 Goudas
-    { productId: "c4", quantity: 1 }, // 1 Blue Cheese
+  shopService.placeOrder(undefined, [
+    { productId: brie.productId, quantity: 1 }, // 1 Brie
+    { productId: gouda.productId, quantity: 2 }, // 2 Goudas
+    { productId: blueCheese.productId, quantity: 1 }, // 1 Blue Cheese
   ]);
 
   console.log("Orders placed successfully!");
@@ -57,8 +56,9 @@ console.log(orderRepo.getAllOrders());
 
 // Update an Order Status
 try {
-  shopService.updateOrderStatus("o1", OrderStatus.IN_DELIVERY);
-  shopService.updateOrderStatus("o2", OrderStatus.COMPLETED);
+  const orders = orderRepo.getAllOrders(); // Get all orders
+  shopService.updateOrderStatus(orders[0].orderId, OrderStatus.IN_DELIVERY);
+  shopService.updateOrderStatus(orders[1].orderId, OrderStatus.COMPLETED);
   console.log("\nUpdated Order Statuses:");
   console.log(orderRepo.getAllOrders());
 } catch (error) {

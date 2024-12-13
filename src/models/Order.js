@@ -1,4 +1,4 @@
-import { generateId } from "../utils/IdService";
+import { generateId } from "../utils/IdService.js";
 
 export const OrderStatus = {
   PROCESSING: "PROCESSING",
